@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: '&amp;&amp; is AND operator'
+  - text: ^^ is XOR operator
+  - text: '|| is OR operator'
+  - text: '! is NOT operator'
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/2268#comment
+status: Solved
+record: -1
+local_check: false

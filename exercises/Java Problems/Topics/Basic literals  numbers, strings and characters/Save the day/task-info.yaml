@@ -1,0 +1,13 @@
+type: code
+files:
+  - name: src/Main.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/39424#comment
+status: Solved
+feedback:
+  message: "<html>Now this Java program works! \nConsider finding a buddy in our Discord\
+    \ to help each other decipher errors and learn faster.</html>"
+  time: "Sat, 28 Jun 2025 18:59:45 UTC"
+record: -1
+submission_language: java17

@@ -3,6 +3,7 @@ package tacos.web;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,22 +12,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import lombok.extern.slf4j.Slf4j; // Used for logging
+import lombok.extern.slf4j.Slf4j; // Lombok annotation for logging
 import tacos.Ingredient;
-import tacos.Ingredient.Type; // Enum for ingredient types
+import tacos.Ingredient.Type; // Enum representing ingredient types (WRAP, PROTEIN, etc.)
 import tacos.Taco;
-import tacos.TacoOrder; // Represents a collection of tacos in an order
+import tacos.TacoOrder; // Holds a collection of tacos in a user’s order
 
-import jakarta.validation.Valid; // For JSR-303 Bean Validation
-import org.springframework.validation.Errors; // For handling validation errors
+import jakarta.validation.Valid; // For bean validation (JSR-303)
+import org.springframework.validation.Errors; // To capture validation errors
 
 /**
- * Controller for handling the taco design page.
- * Annotated with @Slf4j for Lombok-provided logging.
- * Annotated with @Controller to mark this class as a Spring MVC controller.
- * Annotated with @RequestMapping("/design") to map all requests within this class to the /design path.
- * Annotated with @SessionAttributes("tacoOrder") to indicate that the "tacoOrder"
- * model attribute should be stored in the session, making it available across multiple requests.
+ * Controller to handle the taco design page.
+ *
+ * - @Slf4j enables easy logging.
+ * - @Controller marks this class as a Spring MVC controller.
+ * - @RequestMapping("/design") maps all requests in this controller under /design URL path.
+ * - @SessionAttributes("tacoOrder") keeps the TacoOrder in the HTTP session so it's available across multiple requests.
  */
 @Slf4j
 @Controller
@@ -35,15 +36,12 @@ import org.springframework.validation.Errors; // For handling validation errors
 public class DesignTacoController {
 
     /**
-     * This method runs before any handler method and populates the Model with
-     * a list of available ingredients, categorized by their type.
-     * The data is then made accessible to the view (e.g., a Thymeleaf template).
-     *
-     * @param model The Spring Model object to which attributes are added.
+     * Adds all ingredients to the model grouped by their type.
+     * This runs before any handler method to prepare data for the view.
      */
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
-        // Create a list of all available ingredients
+        // Hardcoded list of available ingredients (could be from DB in real apps)
         List<Ingredient> ingredients = Arrays.asList(
                 new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
                 new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
@@ -57,23 +55,19 @@ public class DesignTacoController {
                 new Ingredient("SRCR", "Sour Cream", Type.SAUCE)
         );
 
-        // Get all possible ingredient types
+        // For each ingredient type, filter and add the corresponding ingredients to the model
         Type[] types = Ingredient.Type.values();
-        // For each ingredient type, filter the main list and add it to the model
-        // The attribute name will be the lowercase string representation of the type (e.g., "wrap", "protein").
         for (Type type : types) {
-            model.addAttribute(type.toString().toLowerCase(),
-                    filterByType(ingredients, type));
+            model.addAttribute(
+                    type.toString().toLowerCase(), // attribute name like "wrap", "protein"
+                    filterByType(ingredients, type) // list of ingredients of this type
+            );
         }
     }
 
     /**
-     * Creates and returns a new TacoOrder object. This object will be
-     * added to the Model and, due to @SessionAttributes, also stored in the session.
-     * This ensures that the same TacoOrder instance is used across multiple
-     * requests as the user designs different tacos.
-     *
-     * @return A new TacoOrder instance.
+     * Creates a new TacoOrder instance and adds it to the model/session.
+     * This ensures the order persists across multiple requests.
      */
     @ModelAttribute(name = "tacoOrder")
     public TacoOrder order() {
@@ -81,10 +75,8 @@ public class DesignTacoController {
     }
 
     /**
-     * Creates and returns a new Taco object. This object will be added to the Model.
-     * It represents the current taco being designed by the user.
-     *
-     * @return A new Taco instance.
+     * Creates a new empty Taco object and adds it to the model.
+     * This object will be populated with user input from the form.
      */
     @ModelAttribute(name = "taco")
     public Taco taco() {
@@ -92,57 +84,48 @@ public class DesignTacoController {
     }
 
     /**
-     * Handles HTTP GET requests to /design.
-     * This method simply returns the logical view name "design",
-     * which Spring MVC will resolve to a physical view (e.g., design.html).
-     *
-     * @return The view name "design".
+     * Handles GET requests to /design.
+     * Returns the view name "design" to display the taco design form.
      */
     @GetMapping
     public String showDesignForm() {
-        return "design";
+        return "design"; // Spring resolves this to templates/design.html
     }
 
     /**
-     * Handles HTTP POST requests to /design.
-     * This method processes the submitted taco design.
-     *
-     * @param taco      The Taco object, populated with data from the form.
-     * Annotated with @Valid to trigger JSR-303 validation.
-     * @param errors    An Errors object that holds any validation errors.
-     * @param tacoOrder The TacoOrder object retrieved from the session (due to @SessionAttributes).
-     * @return A redirect string to /orders/current if successful, or back to "design" view if errors exist.
+     * Handles POST requests from the taco design form submission.
+     * Validates the Taco object, and if valid, adds it to the TacoOrder.
+     * If validation fails, returns the design form to show errors.
      */
     @PostMapping
     public String processTaco(
-            @Valid Taco taco, Errors errors,
-            @ModelAttribute TacoOrder tacoOrder) {
-        // Check if there are any validation errors
+            @Valid Taco taco, // The taco filled by user input, validated
+            Errors errors,    // Holds validation errors if any
+            @ModelAttribute TacoOrder tacoOrder) { // The current order from session
+
         if (errors.hasErrors()) {
-            // If errors exist, return to the "design" view to display them
+            // Validation errors found, return to design page to fix them
             return "design";
         }
 
-        // If no validation errors, add the designed taco to the current order
+        // Add the designed taco to the current order
         tacoOrder.addTaco(taco);
-        // Log the processed taco for debugging/information
+
+        // Log the taco details for debugging or tracking
         log.info("Processing taco: {}", taco);
-        // Redirect the user to the current order page
+
+        // Redirect user to the order review/checkout page
         return "redirect:/orders/current";
     }
 
     /**
-     * Helper method to filter a list of ingredients by their specified type.
-     *
-     * @param ingredients The list of all ingredients.
-     * @param type        The Type of ingredient to filter by.
-     * @return An Iterable (specifically a List) containing only the ingredients of the specified type.
+     * Helper method to filter a list of ingredients by their type.
+     * Returns a list containing only ingredients of the specified type.
      */
     private Iterable<Ingredient> filterByType(
             List<Ingredient> ingredients, Type type) {
-        return ingredients
-                .stream() // Convert the list to a stream
-                .filter(x -> x.getType().equals(type)) // Filter elements where the ingredient's type matches the given type
-                .collect(Collectors.toList()); // Collect the filtered elements back into a new List
+        return ingredients.stream()
+                .filter(x -> x.getType().equals(type))
+                .collect(Collectors.toList());
     }
 }

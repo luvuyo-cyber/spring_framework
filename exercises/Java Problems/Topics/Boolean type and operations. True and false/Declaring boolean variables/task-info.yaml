@@ -1,0 +1,19 @@
+type: choice
+is_multiple_choice: true
+options:
+  - text: boolean b = &#x27;t&#x27;;
+  - text: boolean b = false;
+  - text: boolean b = True;
+  - text: boolean b = ‘false’;
+  - text: boolean b = ‘true’;
+  - text: boolean b = 1;
+  - text: boolean b = 0;
+  - text: boolean b = true;
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3387#comment
+status: Solved
+record: -1
+local_check: false

@@ -1,0 +1,18 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: The method prints output to the console because &#x27;System.out&#x27; refers
+      to the standard output stream.
+  - text: The method executes a print statement continuously until you interrupt it.
+  - text: The method creates a compilation error because &#x27;System.out.println()&#x27;
+      is not a valid Java command.
+  - text: "The method executes a silent operation, leaving no visible trace in the program\
+    \ run."
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/39611#comment
+status: Solved
+record: -1
+local_check: false

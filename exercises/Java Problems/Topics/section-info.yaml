@@ -1,0 +1,14 @@
+content:
+  - Introduction to Java
+  - "Basic literals  numbers, strings and characters"
+  - Writing first program
+  - Printing data
+  - Types and variables
+  - Comments
+  - Reading user's input with Scanner
+  - Arithmetic operations
+  - Integer types and operations
+  - Increment and decrement
+  - Floating-point types and operations
+  - Boolean type and operations. True and false
+  - Comparing values. Relational operators

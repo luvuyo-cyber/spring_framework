@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: 1 version
+  - text: 2 versions
+  - text: 3 versions
+  - text: It depends on the Java version
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3741#comment
+status: Solved
+record: -1
+local_check: false

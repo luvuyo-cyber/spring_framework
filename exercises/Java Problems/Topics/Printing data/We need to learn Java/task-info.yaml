@@ -1,0 +1,14 @@
+type: code
+files:
+  - name: src/Main.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3760#comment
+status: Solved
+feedback:
+  message: "<html>You've created a program that outputs exactly what is expected.\
+    \ \nThis skill will help you with code debugging and developing projects of your\
+    \ own.\nKeep it up!\n\nPassed. Congratulations!</html>"
+  time: "Sat, 28 Jun 2025 20:44:50 UTC"
+record: -1
+submission_language: java17

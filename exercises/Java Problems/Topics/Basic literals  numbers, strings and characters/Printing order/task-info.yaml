@@ -1,0 +1,16 @@
+type: sorting
+options:
+  - Print a string
+  - Print a character
+  - Print an integer
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/39423#comment
+status: Solved
+record: -1
+ordering:
+  - 0
+  - 1
+  - 2

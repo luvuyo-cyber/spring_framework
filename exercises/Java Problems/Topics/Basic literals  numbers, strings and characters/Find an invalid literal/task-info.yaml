@@ -1,0 +1,15 @@
+type: choice
+is_multiple_choice: false
+options:
+  - text: '"10000000"'
+  - text: 10_000_000
+  - text: 10000000
+  - text: '''10000000'''
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3227#comment
+status: Solved
+record: -1
+local_check: false

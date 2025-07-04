@@ -1,0 +1,26 @@
+type: matching
+captions:
+  - Keyword
+  - Statement
+  - Comment
+  - Syntax
+  - Name
+options:
+  - A word written by a programmer to identify something in a program
+  - A text that explains what the code does
+  - A set of rules that define how a program needs to be written in order to be valid
+  - A single action terminated by semi-colon
+  - A word that has a special meaning in the programming language
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/3756#comment
+status: Solved
+record: -1
+ordering:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4

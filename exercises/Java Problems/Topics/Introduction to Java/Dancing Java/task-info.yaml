@@ -1,0 +1,24 @@
+type: sorting
+options:
+  -        System.out.println("Oh wanna dance with somebody!");
+  - "\_ \_public static void main(String[] args) {"
+  - "\_ \_}"
+  - "public class Main {"
+  - "}"
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/38630#comment
+status: Solved
+feedback:
+  message: "<html>It looks like you have a natural talent for dancing... oh, I meant\
+    \ Java programming!</html>"
+  time: "Sat, 28 Jun 2025 13:57:16 UTC"
+record: -1
+ordering:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4

@@ -5,22 +5,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus; // Used to manage session attributes
+import org.springframework.web.bind.support.SessionStatus; // To manage session lifecycle
 
-import lombok.extern.slf4j.Slf4j; // Used for logging
-import tacos.TacoOrder; // Represents a collection of tacos in an order
+import lombok.extern.slf4j.Slf4j; // For logging support
+import tacos.TacoOrder; // Represents the entire taco order
 
-import jakarta.validation.Valid; // For JSR-303 Bean Validation
-import org.springframework.validation.Errors; // For handling validation errors
+import jakarta.validation.Valid; // For validating input data
+import org.springframework.validation.Errors; // Holds validation errors
 
 /**
- * Controller for handling taco order submission.
- * Annotated with @Slf4j for Lombok-provided logging.
- * Annotated with @Controller to mark this class as a Spring MVC controller.
- * Annotated with @RequestMapping("/orders") to map all requests within this class to the /orders path.
- * Annotated with @SessionAttributes("tacoOrder") to indicate that the "tacoOrder"
- * model attribute should be stored in the session, making it available across multiple requests.
- * This allows the TacoOrder object designed in DesignTacoController to be carried over.
+ * Controller for handling the taco order submission process.
+ *
+ * - @Slf4j provides a logger named 'log'.
+ * - @Controller marks it as a Spring MVC controller.
+ * - @RequestMapping("/orders") maps all handler methods here under /orders URL.
+ * - @SessionAttributes("tacoOrder") ensures TacoOrder is kept in session across requests.
  */
 @Slf4j
 @Controller
@@ -29,11 +28,10 @@ import org.springframework.validation.Errors; // For handling validation errors
 public class OrderController {
 
     /**
-     * Handles HTTP GET requests to /orders/current.
-     * This method displays the order form where the user can review and
-     * submit their taco order.
+     * Handles GET requests to /orders/current.
+     * Shows the order form where the user can review and finalize their taco order.
      *
-     * @return The logical view name "orderForm".
+     * @return the logical view name "orderForm" (typically resolved to orderForm.html).
      */
     @GetMapping("/current")
     public String orderForm() {
@@ -41,35 +39,30 @@ public class OrderController {
     }
 
     /**
-     * Handles HTTP POST requests to /orders.
-     * This method processes the submitted taco order.
+     * Handles POST requests to /orders.
+     * Processes the submitted taco order form.
      *
-     * @param order The TacoOrder object, populated with data from the form.
-     * This object is typically retrieved from the session due to @SessionAttributes.
-     * Annotated with @Valid to trigger JSR-303 validation on the order details.
-     * @param errors An Errors object that holds any validation errors encountered.
-     * @param sessionStatus The SessionStatus object, used to mark the session attribute
-     * (tacoOrder) as complete, effectively cleaning up the session.
-     * @return A redirect string to the application's root ("/") if the order is successfully
-     * processed, or back to "orderForm" view if validation errors exist.
+     * @param order The TacoOrder object, populated from the form and session.
+     *              Validated with @Valid to enforce constraints.
+     * @param errors Holds any validation errors.
+     * @param sessionStatus Used to mark the session attribute as complete.
+     * @return Redirects to root ("/") if successful, otherwise returns to the order form to fix errors.
      */
     @PostMapping
     public String processOrder(@Valid TacoOrder order, Errors errors,
                                SessionStatus sessionStatus) {
-        // Check if there are any validation errors
+        // If there are validation errors, return to the order form to show messages
         if (errors.hasErrors()) {
-            // If errors exist, return to the "orderForm" view to display them
             return "orderForm";
         }
 
-        // Log the submitted order information for debugging/information purposes
+        // Log order details for debugging or auditing
         log.info("Order submitted: {}", order);
 
-        // Mark the current session attribute ("tacoOrder") as complete.
-        // This clears the TacoOrder from the session, preparing for a new order.
+        // Mark the session's tacoOrder attribute as complete to clear it from session
         sessionStatus.setComplete();
 
-        // Redirect the user to the home page (or a confirmation page)
+        // Redirect to home or confirmation page after successful order submission
         return "redirect:/";
     }
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":Topics-Boolean_type_and_operations._True_and_false-Evaluating_the_conjunction_of_two_booleans" external.linked.project.path="$MODULE_DIR$/../../../../../Topics/Boolean type and operations. True and false/Evaluating the conjunction of two booleans" external.root.project.path="$MODULE_DIR$/../../../../.." external.system.id="GRADLE" external.system.module.group="Java Problems" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../../../Topics/Boolean type and operations. True and false/Evaluating the conjunction of two booleans">
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/Boolean type and operations. True and false/Evaluating the conjunction of two booleans/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/Boolean type and operations. True and false/Evaluating the conjunction of two booleans/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/Boolean type and operations. True and false/Evaluating the conjunction of two booleans/out" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

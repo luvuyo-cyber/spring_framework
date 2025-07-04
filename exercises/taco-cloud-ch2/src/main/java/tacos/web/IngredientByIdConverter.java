@@ -3,63 +3,47 @@ package tacos.web;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.core.convert.converter.Converter; // Import for Spring's Converter interface
-import org.springframework.stereotype.Component; // Annotation to mark this class as a Spring component
+import org.springframework.core.convert.converter.Converter; // Spring interface for type conversion
+import org.springframework.stereotype.Component; // Marks this as a Spring-managed bean
 
-import tacos.Ingredient; // Import for the Ingredient domain class
-import tacos.Ingredient.Type; // Import for the nested Type enum within Ingredient
+import tacos.Ingredient; // Your Ingredient domain object
+import tacos.Ingredient.Type; // Enum for ingredient types (WRAP, PROTEIN, etc.)
 
 /**
- * A Spring Converter implementation that converts an Ingredient ID (String)
- * into an Ingredient object. This is useful for Spring MVC to automatically
- * bind string IDs from web requests (e.g., form submissions) to actual
- * Ingredient domain objects.
- * Annotated with @Component to ensure Spring discovers and registers this
- * converter as a bean in its application context.
+ * Converts a String ingredient ID (from web form submissions)
+ * into a full Ingredient object.
+ *
+ * This helps Spring MVC automatically convert request parameters
+ * (like "FLTO") into Ingredient objects when binding form data.
  */
 @Component
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
 
-    // A map to store available ingredients, using their IDs as keys for quick lookup.
+    // Map to store all ingredients keyed by their ID strings for fast lookup
     private Map<String, Ingredient> ingredientMap = new HashMap<>();
 
     /**
-     * Constructor for IngredientByIdConverter.
-     * Initializes the ingredientMap with all the predefined ingredients.
-     * This acts as a static lookup source for ingredient objects.
+     * Constructor: initializes the map with all ingredients.
+     * This is a simple, in-memory "database" of ingredients for conversion.
      */
     public IngredientByIdConverter() {
-        // Populate the map with Ingredient objects, keyed by their respective IDs.
-        // These ingredients correspond to those defined in the DesignTacoController.
-        ingredientMap.put("FLTO",
-                new Ingredient("FLTO", "Flour Tortilla", Type.WRAP));
-        ingredientMap.put("COTO",
-                new Ingredient("COTO", "Corn Tortilla", Type.WRAP));
-        ingredientMap.put("GRBF",
-                new Ingredient("GRBF", "Ground Beef", Type.PROTEIN));
-        ingredientMap.put("CARN",
-                new Ingredient("CARN", "Carnitas", Type.PROTEIN));
-        ingredientMap.put("TMTO",
-                new Ingredient("TMTO", "Diced Tomatoes", Type.VEGGIES));
-        ingredientMap.put("LETC",
-                new Ingredient("LETC", "Lettuce", Type.VEGGIES));
-        ingredientMap.put("CHED",
-                new Ingredient("CHED", "Cheddar", Type.CHEESE));
-        ingredientMap.put("JACK",
-                new Ingredient("JACK", "Monterrey Jack", Type.CHEESE));
-        ingredientMap.put("SLSA",
-                new Ingredient("SLSA", "Salsa", Type.SAUCE));
-        ingredientMap.put("SRCR",
-                new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
+        ingredientMap.put("FLTO", new Ingredient("FLTO", "Flour Tortilla", Type.WRAP));
+        ingredientMap.put("COTO", new Ingredient("COTO", "Corn Tortilla", Type.WRAP));
+        ingredientMap.put("GRBF", new Ingredient("GRBF", "Ground Beef", Type.PROTEIN));
+        ingredientMap.put("CARN", new Ingredient("CARN", "Carnitas", Type.PROTEIN));
+        ingredientMap.put("TMTO", new Ingredient("TMTO", "Diced Tomatoes", Type.VEGGIES));
+        ingredientMap.put("LETC", new Ingredient("LETC", "Lettuce", Type.VEGGIES));
+        ingredientMap.put("CHED", new Ingredient("CHED", "Cheddar", Type.CHEESE));
+        ingredientMap.put("JACK", new Ingredient("JACK", "Monterrey Jack", Type.CHEESE));
+        ingredientMap.put("SLSA", new Ingredient("SLSA", "Salsa", Type.SAUCE));
+        ingredientMap.put("SRCR", new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
     }
 
     /**
-     * The core conversion method required by the Converter interface.
-     * It takes an ingredient ID (String) and returns the corresponding
-     * Ingredient object from the pre-populated map.
+     * Converts the incoming String ID to the corresponding Ingredient object.
      *
-     * @param id The String ID of the ingredient to convert.
-     * @return The Ingredient object corresponding to the given ID, or null if not found.
+     * @param id the ingredient ID from the form (like "FLTO")
+     * @return the Ingredient object or null if no match found
      */
     @Override
     public Ingredient convert(String id) {

@@ -1,0 +1,22 @@
+type: matching
+captions:
+  - public class HelloWorld
+  - "public static void main(String[] args)"
+  - "System.out.println(&quot;Hello, World!&quot;);"
+options:
+  - "These are our program&#x27;s first words! This command instructs Java to print\
+  \ &quot;Hello, World!&quot;."
+  - We&#x27;re telling Java to create a new public class.  All of your code will be
+    inside classes.
+  - This is where execution begins.
+files:
+  - name: src/Task.java
+    visible: true
+    learner_created: false
+feedback_link: https://hyperskill.org/learn/step/38629#comment
+status: Solved
+record: -1
+ordering:
+  - 0
+  - 1
+  - 2
